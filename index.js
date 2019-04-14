@@ -97,7 +97,7 @@ function getTotalPages() {
             }
         }, (err, res, body) => {
             if(err) return reject(err);
-            return resolve(res.headers['x-total-pages']);
+            return resolve(res.headers['x-total-pages']+1);
         })
     })
 }
