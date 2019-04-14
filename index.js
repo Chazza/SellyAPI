@@ -5,6 +5,7 @@ const { base64encode } = require('nodejs-base64');
 const request = require("request");
 
 /* ------------------------------------------- */
+
 function setEmail(newEmail) {
     email = newEmail;
 }
@@ -16,15 +17,15 @@ function setKey(newKey) {
 function getToken() {
     return base64encode(email + ":" + key);
 }
+
 /* ------------------------------------------- */
 
 function getPages() {
     return getTotalPages();
 }
-function getOrders(page = 0) {
-    if(page == 0) return sendRequest('orders');
-    else return sendRequest('orders?page=' + page);
-    
+
+function getOrders(page = 1) {
+    return sendRequest('orders?page=' + page);
 }
 
 function getOrder(id) {
@@ -59,7 +60,7 @@ function getCoupon(id) {
     return sendRequest('coupons/' + id);
 }
 
-function getQueries(id) {
+function getQueries() {
     return sendRequest('queries');
 }
 
