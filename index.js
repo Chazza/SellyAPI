@@ -18,6 +18,9 @@ function getToken() {
 }
 /* ------------------------------------------- */
 
+function getPages() {
+    return getTotalPages();
+}
 function getOrders(page = 0) {
     if(page == 0) return sendRequest('orders');
     else return sendRequest('orders?page=' + page);
@@ -81,6 +84,23 @@ function sendRequest(endpoint) {
     })
 }
 
+function getTotalPages() {
+    return new Promise((resolve, reject) => {
+        request({
+            url: "https://selly.gg/api/v2/orders",
+            json: true,
+            gzip: true,
+            headers: {
+                'Authorization': 'Basic ' + getToken(),
+                'User-Agent': 'username - localhost'
+            }
+        }, (err, res, body) => {
+            if(err) return reject(err);
+            return resolve(res.headers['x-total-pages']);
+        })
+    })
+}
+
 module.exports.setEmail = setEmail;
 module.exports.setKey = setKey;
 module.exports.getToken = getToken;
@@ -101,3 +121,5 @@ module.exports.getCoupon = getCoupon;
 
 module.exports.getQueries = getQueries;
 module.exports.getQuery = getQuery;
+
+module.exports.getPages = getPages;
